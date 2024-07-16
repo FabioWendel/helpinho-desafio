@@ -1,0 +1,43 @@
+<header class="bg-white shadow">
+  <div
+    class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center"
+  >
+    <img src="assets/image/logo.png" alt="Helpinho Logo" class="h-8 w-auto" />
+    <nav class="hidden lg:block ml-10 space-x-4">
+      <a
+        routerLink="/home"
+        routerLinkActive="text-pink-600"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="text-gray-600 hover:text-gray-900 font-medium"
+      >
+        Home
+      </a>
+      <a
+        routerLink="/help"
+        routerLinkActive="text-pink-600"
+        class="text-gray-600 hover:text-gray-900 font-medium"
+      >
+        Pedir um Helpinho
+      </a>
+      <a
+        routerLink="/my"
+        routerLinkActive="text-pink-600"
+        class="text-gray-600 hover:text-gray-900 font-medium"
+      >
+        Meus Helpinhos
+      </a>
+    </nav>
+    <div *ngIf="islogged" class="flex space-x-4">
+      <a class="text-pink-600 hover:text-pink-900 font-medium px-4 py-2">
+        <i class="pi pi-user" style="font-size: 1.2rem"></i>
+        <i class="text-gray-700 ml-1 font-medium text-sm"> {{ username }} </i>
+      </a>
+      <a
+        (click)="logoutUser()"
+        class="bg-pink-600 text-white px-4 py-2 rounded-md shadow-sm hover:bg-pink-700"
+      >
+        <i class="pi pi-sign-out" style="font-size: 0.8rem"></i>
+      </a>
+    </div>
+  </div>
+</header>

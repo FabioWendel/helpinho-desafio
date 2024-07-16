@@ -1,0 +1,109 @@
+<div
+  class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-24 lg:px-8"
+  [formGroup]="parentForm"
+>
+  <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+    Fale um pouco mais
+  </h2>
+  <p class="mt-4 text-lg text-gray-500">
+    Escreva os detalhes sobre seu helpinho.
+  </p>
+  <div class="mt-8 space-y-6">
+    <div>
+      <label for="title" class="block text-sm font-medium text-gray-700"
+        >Título do helpinho</label
+      >
+      <input
+        type="text"
+        id="title"
+        formControlName="title"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
+      />
+      <div
+        *ngIf="
+          parentForm.get('title')?.invalid && parentForm.get('title')?.touched
+        "
+        class="text-red-500 text-sm"
+      >
+        Título é obrigatório.
+      </div>
+    </div>
+    <div>
+      <div
+        class="border-dashed border-2 border-gray-300 rounded-lg p-6 text-center cursor-pointer"
+        (dragover)="onDragOver($event)"
+        (drop)="onDrop($event)"
+      >
+        <input
+          type="file"
+          id="fileInput"
+          (change)="onFileSelected($event)"
+          class="hidden"
+        />
+        <label for="fileInput" class="block">
+          <img
+            *ngIf="imageUrl"
+            [src]="imageUrl"
+            alt="Selected Image"
+            class="mx-auto h-24 w-24 object-cover rounded-full"
+          />
+          <span
+            *ngIf="!imageUrl"
+            class="flex justify-center items-center h-24 w-24 mx-auto rounded-full bg-gray-100"
+          >
+            <i class="pi pi-cloud-upload text-2xl text-gray-400"></i>
+          </span>
+          <p class="mt-2 text-pink-600">
+            <strong>Selecione</strong> ou arraste uma foto para representar seu
+            helpinho
+          </p>
+          <p class="mt-1 text-sm text-gray-500">
+            SVG, PNG, JPG or GIF (max. 800x400)
+          </p>
+        </label>
+      </div>
+      <div
+        *ngIf="
+          parentForm.get('image')?.invalid && parentForm.get('image')?.touched
+        "
+        class="text-red-500 text-sm"
+      >
+        Imagem é obrigatória.
+      </div>
+    </div>
+    <div>
+      <label for="description" class="block text-sm font-medium text-gray-700"
+        >Descrição</label
+      >
+      <textarea
+        id="description"
+        formControlName="description"
+        rows="5"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
+      ></textarea>
+      <div
+        *ngIf="
+          parentForm.get('description')?.invalid &&
+          parentForm.get('description')?.touched
+        "
+        class="text-red-500 text-sm"
+      >
+        Descrição é obrigatória.
+      </div>
+    </div>
+  </div>
+  <div class="mt-8 flex justify-between">
+    <button
+      class="bg-gray-200 text-gray-700 px-6 py-3 rounded-md shadow-sm hover:bg-gray-300"
+      (click)="onPrev()"
+    >
+      Voltar
+    </button>
+    <button
+      class="bg-pink-600 text-white px-6 py-3 rounded-md shadow-sm hover:bg-pink-700"
+      (click)="onContinue()"
+    >
+      Continuar
+    </button>
+  </div>
+</div>

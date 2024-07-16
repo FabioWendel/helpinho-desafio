@@ -1,0 +1,35 @@
+<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+  <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+    Em que categoria se encaixa seu helpinho?
+  </h2>
+  <p class="mt-4 text-lg text-gray-500">Escolha uma das categorias abaixo.</p>
+  <div class="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+    <button
+      *ngFor="let category of categories"
+      (click)="selectCategory(category.id)"
+      type="button"
+      [ngClass]="{
+        'border-pink-500': selectedCategoryId === category.id,
+        'border-gray-300': selectedCategoryId !== category.id
+      }"
+      class="border p-4 rounded-lg hover:border-pink-500"
+    >
+      <img
+        [src]="category.imageUrl"
+        [alt]="category.name"
+        class="mx-auto h-12 w-12"
+      />
+      <span class="block text-center mt-2 text-gray-700">{{
+        category.name
+      }}</span>
+    </button>
+  </div>
+  <div class="mt-8 flex justify-end">
+    <button
+      (click)="onContinue()"
+      class="bg-pink-600 text-white px-6 py-3 rounded-md shadow-sm hover:bg-pink-700"
+    >
+      Continuar
+    </button>
+  </div>
+</div>

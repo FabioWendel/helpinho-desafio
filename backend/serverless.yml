@@ -1,0 +1,135 @@
+service: nodejs-aws-lambda
+useDotenv: true
+provider:
+  name: aws
+  runtime: nodejs20.x
+  timeout: 60
+  region: ${env:AWS_REGION_LOCALE}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Scan
+            - dynamodb:Query
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+            - s3:PutObject
+            - s3:GetObject
+            - s3:DeleteObject
+          Resource:
+            - arn:aws:dynamodb:${self:provider.region}:*:table/${env:USER_TABLE}
+            - arn:aws:dynamodb:${self:provider.region}:*:table/${env:USER_TABLE}/index/*
+            - arn:aws:dynamodb:${self:provider.region}:*:table/${env:HELP_TABLE}
+            - arn:aws:dynamodb:${self:provider.region}:*:table/${env:HELP_TABLE}/index/*
+            - arn:aws:dynamodb:${self:provider.region}:*:table/${env:HELP_FULFILLED_TABLE}
+            - arn:aws:dynamodb:${self:provider.region}:*:table/${env:HELP_FULFILLED_TABLE}/index/*
+            - arn:aws:s3:::${env:S3_BUCKET_NAME}
+            - arn:aws:s3:::${env:S3_BUCKET_NAME}/*
+
+functions:
+  app:
+    handler: src/lambda.handler
+    events:
+      - http:
+          path: /
+          method: any
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
+      - http:
+          path: /{proxy+}
+          method: any
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
+
+resources:
+  Resources:
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${env:USER_TABLE}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: email
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        GlobalSecondaryIndexes:
+          - IndexName: EmailIndex
+            KeySchema:
+              - AttributeName: email
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+    HelpRequestTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${env:HELP_TABLE}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: requesterId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        GlobalSecondaryIndexes:
+          - IndexName: requesterId-index
+            KeySchema:
+              - AttributeName: requesterId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+    HelpFulfilledTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${env:HELP_FULFILLED_TABLE}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+    S3Bucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${env:S3_BUCKET_NAME}
+    S3BucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: !Ref S3Bucket
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal: "*"
+              Action: "s3:GetObject"
+              Resource: !Sub arn:aws:s3:::${env:S3_BUCKET_NAME}/*
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+  - serverless-dotenv-plugin

@@ -1,0 +1,149 @@
+<div
+  style="
+    background: linear-gradient(292.12deg, #ff648e -35.02%, #fff0f3 78.96%),
+      url(assets/image/textura.png) center center / cover no-repeat;
+  "
+>
+  <header
+    class="w-full py-6 flex justify-between items-center px-4 sm:px-6 lg:px-8"
+  >
+    <div class="flex items-center">
+      <img src="assets/image/logo.png" alt="Helpinho Logo" class="h-8 w-auto" />
+    </div>
+    <nav class="hidden lg:block ml-10 space-x-4">
+      <a
+        routerLink="/home"
+        routerLinkActive="text-pink-600"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="text-gray-600 hover:text-gray-900 font-medium"
+      >
+        Home
+      </a>
+      <a
+        *ngIf="islogged"
+        routerLink="/help"
+        routerLinkActive="text-pink-600"
+        class="text-gray-600 hover:text-gray-900 font-medium"
+      >
+        Pedir um Helpinho
+      </a>
+      <a
+        *ngIf="islogged"
+        routerLink="/my"
+        routerLinkActive="text-pink-600"
+        class="text-gray-600 hover:text-gray-900 font-medium"
+      >
+        Meus Helpinhos
+      </a>
+    </nav>
+    <div class="flex space-x-4" *ngIf="!islogged">
+      <a
+        routerLink="/signup"
+        routerLinkActive="text-pink-600"
+        class="text-pink-600 hover:text-pink-900 font-medium px-4 py-2"
+      >
+        Registre-se grátis
+      </a>
+      <a
+        routerLink="/signin"
+        routerLinkActive="text-pink-600"
+        class="bg-pink-600 text-white px-4 py-2 rounded-md shadow-sm hover:bg-pink-700"
+      >
+        Login
+      </a>
+    </div>
+
+    <div *ngIf="islogged" class="flex space-x-4">
+      <a class="text-pink-600 hover:text-pink-900 font-medium px-4 py-2">
+        <i class="pi pi-user" style="font-size: 1.2rem"></i>
+        <i class="text-gray-700 ml-1 font-medium text-sm"> {{ username }} </i>
+      </a>
+      <a
+        (click)="logoutUser()"
+        class="bg-pink-600 text-white px-4 py-2 rounded-md shadow-sm hover:bg-pink-700"
+      >
+        <i class="pi pi-sign-out" style="font-size: 0.8rem"></i>
+      </a>
+    </div>
+  </header>
+  <div
+    *ngIf="!islogged"
+    class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-24 lg:px-8"
+  >
+    <div class="lg:grid lg:grid-cols-2 lg:gap-8">
+      <div>
+        <img
+          class="mx-auto lg:w-3/4"
+          src="assets/image/home-check.png"
+          alt="Banner Image"
+        />
+        <img
+          class="mx-auto lg:w-3/4"
+          src="assets/image/home-text.png"
+          alt="Banner Image"
+        />
+        <a
+          routerLink="/signup"
+          class="mt-8 ml-16 inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-lg text-white bg-pink-600 hover:bg-pink-700"
+        >
+          Registre-se grátis
+        </a>
+      </div>
+      <div class="mt-10 lg:mt-0 lg:flex lg:items-center">
+        <img
+          class="mx-auto lg:w-3/4"
+          src="assets/image/home.png"
+          alt="Banner Image"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="islogged"
+    class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-24 lg:px-8"
+  >
+    <div class="mt-4 flex justify-between">
+      <div>
+        <h1 class="text-3xl font-bold">
+          Olá <span class="text-gray-900">{{ username }}</span>
+        </h1>
+        <p class="mt-2 text-lg">
+          Vamos dá um <span class="text-pink-600">helpinho</span> hoje?
+          Separamos uma seleção especial para você
+        </p>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="text-pink-600 font-semibold">0</span>
+            <span class="text-gray-600">helpinhos acompanhando</span>
+          </div>
+          <div class="flex items-center space-x-2 mt-2">
+            <span class="text-pink-600 font-semibold">0</span>
+            <span class="text-gray-600">helpinhos criados</span>
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+        <div class="absolute mt-6 ml-14">
+          <p class="text-sm text-gray-700">você ja doou</p>
+          <p class="text-xl font-bold text-pink-600">
+            R$ {{ 000 | number : "1.2-2" }}
+          </p>
+        </div>
+        <div class="absolute mt-28 ml-12">
+          <p class="text-xl font-bold text-pink-600">
+            {{ 000 }}
+          </p>
+          <p class="text-sm text-gray-700">Helpinhos alegres</p>
+        </div>
+        <div>
+          <img
+            class="mx-auto lg:w-3/4"
+            src="assets/image/mask.png"
+            alt="Banner Image"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

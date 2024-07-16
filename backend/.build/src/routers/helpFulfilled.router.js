@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const HelpFulfilled_handler_1 = require("../handlers/HelpFulfilled.handler");
+const validation_middleware_1 = require("../middleware/validation.middleware");
+const HelpFulfilled_model_1 = require("../models/HelpFulfilled.model");
+const jwt_middleware_1 = require("../middleware/jwt.middleware");
+const router = (0, express_1.Router)();
+router.post("/help-fulfilled/", jwt_middleware_1.authenticateToken, (0, validation_middleware_1.validationMiddleware)(HelpFulfilled_model_1.HelpFulfilledCreate), HelpFulfilled_handler_1.createHelpFulfilled);
+router.put("/help-fulfilled/:id", jwt_middleware_1.authenticateToken, (0, validation_middleware_1.validationMiddleware)(HelpFulfilled_model_1.HelpFulfilledUpdate), HelpFulfilled_handler_1.updateHelpFulfilled);
+router.get("/help-fulfilled/", jwt_middleware_1.authenticateToken, HelpFulfilled_handler_1.getHelpFulfilled);
+router.get("/help-fulfilled/:id", jwt_middleware_1.authenticateToken, HelpFulfilled_handler_1.getHelpFulfilledById);
+router.delete("/help-fulfilled/:id", jwt_middleware_1.authenticateToken, HelpFulfilled_handler_1.deleteHelpFulfilled);
+exports.default = router;

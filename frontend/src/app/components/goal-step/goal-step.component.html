@@ -1,0 +1,44 @@
+<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-24 lg:px-8">
+  <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+    Quanto você precisa?
+  </h2>
+  <p class="mt-4 text-lg text-gray-500">
+    Defina a meta que você quer alcançar com seu helpinho.
+  </p>
+  <div class="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+    <button
+      *ngFor="let goal of goals"
+      type="button"
+      (click)="selectGoal(goal)"
+      [ngClass]="{
+        'border-pink-500': selectedGoal === goal,
+        'border-gray-300': selectedGoal !== goal
+      }"
+      class="border p-4 rounded-lg hover:border-pink-500"
+    >
+      <span class="block text-center text-gray-700"
+        >R$ {{ goal | number : "1.2-2" }}</span
+      >
+    </button>
+  </div>
+  <div
+    *ngIf="parentForm.get('goal')?.invalid && parentForm.get('goal')?.touched"
+    class="text-red-500 text-sm mt-4"
+  >
+    Por favor, selecione uma meta.
+  </div>
+  <div class="mt-8 flex justify-between">
+    <button
+      class="bg-gray-200 text-gray-700 px-6 py-3 rounded-md shadow-sm hover:bg-gray-300"
+      (click)="onPrev()"
+    >
+      Voltar
+    </button>
+    <button
+      class="bg-pink-600 text-white px-6 py-3 rounded-md shadow-sm hover:bg-pink-700"
+      (click)="onContinue()"
+    >
+      Continuar
+    </button>
+  </div>
+</div>

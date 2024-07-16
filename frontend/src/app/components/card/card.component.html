@@ -1,0 +1,77 @@
+<p-confirmDialog></p-confirmDialog>
+
+<div
+  class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+>
+  <div
+    *ngFor="let item of items"
+    class="bg-white rounded-lg shadow-lg overflow-hidden"
+  >
+    <img
+      src="{{ item.image }}"
+      alt="Help Image"
+      class="w-full h-48 object-cover"
+    />
+    <div class="p-6">
+      <div class="flex items-center space-x-2">
+        <a class="text-pink-600 hover:text-pink-900 font-medium px-4 py-2">
+          <i class="pi pi-user" style="font-size: 1.2rem"></i>
+        </a>
+        <div>
+          <p class="font-semibold text-gray-900">
+            {{ item.requesterDetails?.name }}
+          </p>
+          <p class="text-sm text-gray-500">
+            {{ item.requesterDetails?.email }}
+          </p>
+        </div>
+      </div>
+      <h3 class="mt-4 text-lg font-bold text-gray-900">{{ item.title }}</h3>
+      <p class="mt-2 text-sm text-gray-600">
+        {{ item.description }}
+      </p>
+      <div class="mt-4 flex items-center space-x-2">
+        <span
+          class="px-3 py-1 text-xs font-medium text-white bg-pink-600 rounded-full"
+          >{{ item.category }}</span
+        >
+      </div>
+      <div *ngIf="!my">
+        <div class="mt-4 flex -space-x-2">
+          <a class="text-pink-600 hover:text-pink-900 font-medium px-4 py-2">
+            <i class="pi pi-user" style="font-size: 1.2rem"></i>
+          </a>
+        </div>
+        <p class="mt-2 text-sm text-gray-600">+5 outros</p>
+      </div>
+      <div *ngIf="my">
+        <div class="mt-4 flex -space-x-2">
+          <a
+            class="text-pink-600 hover:text-pink-900 font-medium px-4 py-2"
+            (click)="confirmDelete(item)"
+          >
+            <i class="pi pi-trash" style="font-size: 1.2rem"></i>Excluir
+          </a>
+          <a
+            class="text-pink-600 hover:text-pink-900 font-medium px-4 py-2"
+            (click)="confirmEdit(item)"
+          >
+            <i class="pi pi-pen-to-square" style="font-size: 1.2rem"></i>Editar
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-6 flex justify-center" *ngIf="loading">
+  <button
+    class="flex items-center px-4 py-2 bg-pink-100 text-pink-600 rounded-lg shadow-md focus:outline-none"
+  >
+    <p-progressSpinner
+      styleClass="w-5 h-5 mr-2"
+      strokeWidth="8"
+    ></p-progressSpinner>
+    Carregando mais helpinhos
+  </button>
+</div>
