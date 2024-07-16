@@ -70,6 +70,7 @@ Não consegui realizar todo o projeto, mas o que consegui fazer inclui:
 - Interface do usuário próxima do design desejado
 - Backend com AWS Lambda, DynamoDB e S3 para gerenciamento do backend e armazenamento de imagens
 - Validação de token e login no backend
+- Todas as rotas de CRUD backend esta completa (CREATE, DELETE, UPDATE, GET)
 
 ### Melhorias Futuras
 
